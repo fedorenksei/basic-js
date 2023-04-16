@@ -22,14 +22,14 @@ function dateSample(sampleActivity) {
   
   if (typeof sampleActivity !== 'string' 
     && !(sampleActivity instanceof String)
-    // || !/^\d+$/.test(sampleActivity)
+    || !/^[\d.]+$/.test(sampleActivity)
   ) return false
 
-  sampleActivity = parseInt(sampleActivity)
-  if (!sampleActivity) return false
+  sampleActivity = parseFloat(sampleActivity)
+  if (!sampleActivity || sampleActivity > MODERN_ACTIVITY) return false
 
   const k = 0.693 / HALF_LIFE_PERIOD
-  let result = Math.log(MODERN_ACTIVITY / k) / sampleActivity
+  let result = Math.log(MODERN_ACTIVITY / sampleActivity) / k
   result = Math.ceil(result)
   return result
 }
